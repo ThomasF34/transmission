@@ -1,3 +1,4 @@
+import { AddTorrentOptions as NormalizedAddTorrentOptions } from '@ctrl/shared-torrent';
 export interface DefaultResponse {
   arguments: any;
   result: 'success' | string;
@@ -9,7 +10,12 @@ export interface AddTorrentOptions {
    */
   metainfo?: string;
   'download-dir': string;
+  filename?: string;
   paused: boolean;
+}
+
+export interface NormalizedAddTorrentOptionsFileName extends NormalizedAddTorrentOptions {
+  filename?: string;
 }
 
 export interface AddTorrentResponse extends DefaultResponse {
@@ -567,4 +573,3 @@ export interface RenamePathOptions {
    */
   name: string;
 }
-

@@ -148,9 +148,10 @@ export class Transmission implements TorrentClient {
   /**
    * Adding a torrent
    * @param torrent a string of file path or contents of the file as base64 string
+   * @param magnetId the magnet id hash
    */
   async addTorrent(
-    torrent: string | Buffer,
+    torrent?: string | Buffer,
     options: Partial<AddTorrentOptions> = {},
   ): Promise<AddTorrentResponse> {
     const args: AddTorrentOptions = {
@@ -159,12 +160,17 @@ export class Transmission implements TorrentClient {
       ...options,
     };
 
-    if (typeof torrent === 'string') {
-      args.metainfo = existsSync(torrent) ?
-        Buffer.from(readFileSync(torrent)).toString('base64') :
-        Buffer.from(torrent, 'base64').toString('base64');
-    } else {
-      args.metainfo = torrent.toString('base64');
+    if (options.filename) {
+      args.filename = `magnet:?xt=urn:btih:${options.filename}`;
+    }
+    if (torrent) {
+      if (typeof torrent === 'string') {
+        args.metainfo = existsSync(torrent)
+          ? Buffer.from(readFileSync(torrent)).toString('base64')
+          : Buffer.from(torrent, 'base64').toString('base64');
+      } else {
+        args.metainfo = torrent.toString('base64');
+      }
     }
 
     const res = await this.request<AddTorrentResponse>('torrent-add', args);
@@ -172,7 +178,7 @@ export class Transmission implements TorrentClient {
   }
 
   async normalizedAddTorrent(
-    torrent: string | Buffer,
+    torrent?: string | Buffer,
     options: Partial<NormalizedAddTorrentOptions> = {},
   ): Promise<NormalizedTorrent> {
     const torrentOptions: Partial<AddTorrentOptions> = {};
@@ -180,7 +186,7 @@ export class Transmission implements TorrentClient {
       torrentOptions.paused = true;
     }
 
-    if (!Buffer.isBuffer(torrent)) {
+    if (torrent && !Buffer.isBuffer(torrent)) {
       torrent = Buffer.from(torrent);
     }
 
@@ -324,8 +330,7 @@ export class Transmission implements TorrentClient {
     const url = urlJoin(this.config.baseUrl, this.config.path);
 
     try {
-      const res = await got
-        .post<T>(url, {
+      const res = await got.post<T>(url, {
         json: {
           method,
           arguments: args,

@@ -1,10 +1,10 @@
 {
-  "name": "@ctrl/transmission",
+  "name": "@mjr/transmission",
   "version": "0.0.0-placeholder",
   "description": "TypeScript api wrapper for transmission using got",
-  "author": "Scott Cooper <scttcper@gmail.com>",
+  "author": "Michael Rode",
   "license": "MIT",
-  "repository": "scttcper/transmission",
+  "repository": "michaelrode/transmission",
   "keywords": [
     "transmission",
     "typescript"
