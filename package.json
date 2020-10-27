@@ -1,13 +1,17 @@
 {
-  "name": "@mjr/transmission",
-  "version": "0.0.0-placeholder",
+  "name": "@thomasf34/transmission",
+  "version": "1.0.1",
   "description": "TypeScript api wrapper for transmission using got",
-  "author": "Michael Rode",
+  "author": "Thomas Falcone",
   "license": "MIT",
-  "repository": "michaelrode/transmission",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasf34/transmission.git"
+  },
   "keywords": [
     "transmission",
-    "typescript"
+    "typescript",
+    "magnet"
   ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -62,5 +66,12 @@
   },
   "engines": {
     "node": ">=10.19.0"
+  },
+  "bugs": {
+    "url": "https://github.com/thomasf34/transmission/issues"
+  },
+  "homepage": "https://github.com/thomasf34/transmission#readme",
+  "directories": {
+    "test": "test"
   }
 }

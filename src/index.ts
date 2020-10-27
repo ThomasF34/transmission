@@ -161,7 +161,7 @@ export class Transmission implements TorrentClient {
     };
 
     if (options.filename) {
-      args.filename = `magnet:?xt=urn:btih:${options.filename}`;
+      args.filename = options.filename;
     }
     if (torrent) {
       if (typeof torrent === 'string') {
